@@ -1,0 +1,73 @@
+/* this code is written retrive PHOTORESISTOR data from one ARDUINO UNO and use that data switch the lights on and off in the second ARDUINO UNO
+    setup of MASTER ARDUINO UNO 
+    pin 12 is used as output to which an led is connected 
+    
+    setup of SLAVE ARDUINO UNO
+    PIN A0 used as analog input
+    a voltage divider circuit is made with a photoresistor and 4.7k ohm resistor and the data is fed to the analog pin A0 */
+                                                                                                                              
+
+
+//MASTER 
+#include <Wire.h> // importing the wie library used for I2C communications
+#include <stdlib.h> 
+#include<math.h> // importing the math library
+int d,e,f; // declaring integers
+
+void setup() {
+  Wire.begin();        // starts I2C communications as a master
+  Serial.begin(9600); 
+  pinMode(12,OUTPUT); // setting pin 12 as output 
+}
+
+void loop() {
+  int i =0;
+  int b =0;
+    Wire.requestFrom(8,1); // requesting data from slave at address 8 of length 1 byte
+  while (Wire.available()) // creates a while loop for the amount of data available
+  { 
+    int c = Wire.read(); //  stores the available data in c
+    d= pow(10,i);        /* used for setting the position of  digits namely 1s 10ths and 100s positions
+    e= c*d;
+    b = b+e ; 
+    i++;
+  }
+
+Serial.println(); // leaves a two line gap in before 
+Serial.println(); // printing the value 
+Serial.print(b);  // of b in serial monitor
+
+   
+ 
+  
+if (b>=26 && b<=90 )  // checks the value of recieved data and compares it to known value to check its bright or dark
+{ digitalWrite(13,HIGH);  // sets pin 13 to high
+}
+else 
+{
+digitalWrite(13,LOW);   // sets pin 13 to low
+}
+   delay(500);
+}
+
+
+
+
+//SLAVE
+
+#include <Wire.h>
+
+void setup() {
+  Wire.begin(8);                // initiates I2C communication
+  Wire.onRequest(requestEvent);  // when there is a request from masters procceds to the rrequest event function
+}
+
+void loop() {
+  delay(100);
+  Serial.println(analogRead(A0));
+}
+
+void requestEvent() {
+  Wire.write(analogRead(A0));  // sends the value of A0 to the master
+ 
+}
