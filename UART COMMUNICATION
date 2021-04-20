@@ -1,0 +1,43 @@
+// this code is write for UART COMMUNICATION between two ARDUINO UNO 
+// The Tx of the first arduino is coonected to the Rx of the second 
+// The Rx of the first arduino is connected to the Tx of the second
+
+// in the first ARDUINO UNO
+
+void setup() {
+  Serial.begin(9600); // sets baud rate to 9600
+}
+
+void loop() {
+
+  Serial.write(45); // sends 45 to the SECOND ARDUINO UNO
+  
+
+  }
+  
+  
+  
+  
+  // in the second ADUINO UNO
+  int e,d; // declaring integers
+
+ int incomingByte = 0; 
+
+void setup() {
+  Serial.begin(9600); // setting baud rate
+   
+}
+
+void loop() {
+  
+  if (Serial.available() > 0)  // checking if there is any message 
+  {
+    
+    incomingByte = Serial.read(); // storing the received integer in incomingbyte
+
+    
+    Serial.print("I received: "); // printing the received data 
+    Serial.println(incomingByte);
+  }
+}
+  
