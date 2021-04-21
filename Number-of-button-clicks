@@ -1,0 +1,33 @@
+const int buttonPin = 2;    // initializing variables
+const int ledPin = 13;       
+
+int buttonPushCounter = 0;   
+int buttonState = 0;         
+int lastButtonState = 0;     
+
+void setup() 
+{
+  pinMode(buttonPin, INPUT); // setting pins as input and output
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop() 
+{
+  buttonState = digitalRead(buttonPin); // stores the value of pin 2 in button state
+
+  if (buttonState != lastButtonState) 
+  {
+    if (buttonState == HIGH) 
+    {
+      buttonPushCounter++;
+      Serial.print("Number of button pushes: ");
+      Serial.println(buttonPushCounter);
+    } 
+   
+    delay(50);
+  }
+  lastButtonState = buttonState;
+
+}
