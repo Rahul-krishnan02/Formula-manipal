@@ -1,0 +1,12 @@
+void setup()
+{
+  pinMode(13, OUTPUT); //setting pin 13 as output
+}
+
+void loop()
+{
+  digitalWrite(13, HIGH);     // setting pin 13 to high
+  delay(1000);               // Wait for 1000 millisecond(s)
+  digitalWrite(13, LOW);    // setting pin 13 to low
+  delay(1000);             // Wait for 1000 millisecond(s)
+}
